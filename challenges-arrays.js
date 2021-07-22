@@ -11,51 +11,51 @@
  */
 
 function range(start, end, step) {
-    let array_range = [];
-    if (start >= end) {
-        for (var i = start; i >= end; i += step) {
-            array_range.push(i);
-        }
-    } else {
-        for (var j = start; j <= end; j += step) {
-            array_range.push(j);
-        }
+  let array_range = [];
+  if (start >= end) {
+    for (var i = start; i >= end; i += step) {
+      array_range.push(i);
     }
-    return array_range;
+  } else {
+    for (var j = start; j <= end; j += step) {
+      array_range.push(j);
+    }
+  }
+  return array_range;
 }
 
-function sum(array_range){
-    let total_sum = 0;
-    for (let index = 0; index < array_range.length; index++) {
-         total_sum += array_range[index];
+function sum(array_range) {
+  let total_sum = 0;
+  for (let index = 0; index < array_range.length; index++) {
+    total_sum += array_range[index];
 
-    }
-    return total_sum;
+  }
+  return total_sum;
 }
 
 console.log(range(1, 10, 2));
 console.log(sum(range(1, 10, 2)));
 
 //Reverse array
-function reverseArray(numbers){
-    let arrReversed = [];
-    for (let index = numbers.length - 1; index >= 0; index--) {
-         arrReversed.push(numbers[index]);
-    }
-    return arrReversed;
+function reverseArray(numbers) {
+  let arrReversed = [];
+  for (let index = numbers.length - 1; index >= 0; index--) {
+    arrReversed.push(numbers[index]);
+  }
+  return arrReversed;
 }
 
-function reverseArrayInPlace(arrReversedAgain){
-    let arrRevInPlace = [];
-    for (let index = arrReversedAgain.length - 1; index >= 0; index--) {
-        arrRevInPlace.push(arrReversedAgain[index]);
-    }
-    return arrRevInPlace;
+function reverseArrayInPlace(arrReversedAgain) {
+  let arrRevInPlace = [];
+  for (let index = arrReversedAgain.length - 1; index >= 0; index--) {
+    arrRevInPlace.push(arrReversedAgain[index]);
+  }
+  return arrRevInPlace;
 }
 
-console.log(reverseArray([1,2,3,4]));
+console.log(reverseArray([1, 2, 3, 4]));
 
-console.log(reverseArrayInPlace(reverseArray([1,2,3,4])));
+console.log(reverseArrayInPlace(reverseArray([1, 2, 3, 4])));
 
 
 /*
@@ -89,44 +89,108 @@ If you haven’t already, also write a recursive version of nth.
 */
 
 function arrayToList(array) {
-    let list = null;
-    for (let index = array.length - 1; index >= 0; index--) {
-        list = { value: array[index], rest: list };
-    }
-    return list;
+  let list = null;
+  for (let index = array.length - 1; index >= 0; index--) {
+    list = { value: array[index], rest: list };
+  }
+  return list;
 }
 
 function listToArray(list) {
-    var array = [];
-    for (let node = list; node; node = node.rest) {
-      array.push(node.value);
-    }
-    return array;
+  var array = [];
+  for (let node = list; node; node = node.rest) {
+    array.push(node.value);
   }
+  return array;
+}
 
-  function prepend(element, list) {
-    return {
-      value: element,
-      rest: list
-    };
-  }
+function prepend(element, list) {
+  return {
+    value: element,
+    rest: list
+  };
+}
 
-  function nth(list, number){
-      return listToArray(list)[number];
-  }
+function nth(list, number) {
+  return listToArray(list)[number];
+}
 
-  function nthRecursive(list, number) {
-    if (number === 0) {
-      return list.value;
-    } else if (list.rest === null) {
-      return undefined;
-    } else {
-      return nthRecursive(list.rest, number-1);
-    }
+function nthRecursive(list, number) {
+  if (number === 0) {
+    return list.value;
+  } else if (list.rest === null) {
+    return undefined;
+  } else {
+    return nthRecursive(list.rest, number - 1);
   }
+}
 
 console.log(arrayToList([1, 2, 3]));
 console.log(listToArray(arrayToList([1, 2, 3])));
 console.log(prepend(10, prepend(20, null)));
 console.log(nth(arrayToList([10, 20, 30]), 1));
 console.log(nthRecursive(arrayToList([10, 20, 30]), 1));
+
+
+/**
+ * **** Deep Comparison ****
+ * 
+ * The == operator compares objects by identity. 
+ * But sometimes you’d prefer to compare the values of 
+ * their actual properties.
+ * Write a function deepEqual that takes two values and returns true only 
+ * if they are the same value or are objects with the same properties,
+ * where the values of the properties are equal when compared with 
+ * a recursive call to deepEqual.
+ * To find out whether values should be compared directly 
+ * (use the === operator for that) or have their properties compared,
+ * you can use the typeof operator. 
+ * If it produces "object" for both values, you should do a deep 
+ * comparison. But you have to take one silly exception into account:
+ * because of a historical accident, typeof null also produces "object".
+ * The Object.keys function will be useful when you need to go over 
+ * the prop- erties of objects to compare them.
+
+ */
+
+let deepEqual = (value1, value2) => {
+  if (value1 === value2) return true;
+  if (value1 == null || typeof value1 != 'object'
+    || value2 == null || typeof value2 != 'object') return false;
+
+  let objectKeys1 = Object.keys(value1), objectKeys2 = Object.keys(value2);
+  if (objectKeys1.length != objectKeys2.length) return false;
+  for (let key of objectKeys2) {
+    if (!objectKeys1.includes(key) || !deepEqual(value1[key], value2[key])) return false;
+  }
+  return true;
+}
+
+const objectA = {
+  name: 'Peter',
+  age: 24,
+  personal_tastes: ['coconut, strawberry, peaches']
+}
+const objectB = {
+  name: 'Derek',
+  age: 25,
+  personal_tastes: ['watermelon', 'melon', 'popcorn']
+}
+
+const objectC = {
+  name: 'Peter',
+  age: 24,
+  personal_tastes: ['coconut, strawberry, peaches']
+}
+
+const array1 = [1, 2, 3];
+const array2 = [1, 3, 2];
+const array3 = [1, 2, 3];
+
+
+console.log(deepEqual(3, 2)); //false
+console.log(deepEqual(3, 3)); //true
+console.log(deepEqual(array1, array2)); //false 
+console.log(deepEqual(array1, array3)); //true
+console.log(deepEqual(objectA, objectB)); //false
+console.log(deepEqual(objectA, objectC)); //true

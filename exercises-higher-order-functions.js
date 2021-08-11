@@ -49,7 +49,7 @@ function every(array, test) {
     return true;
 }
 
-const arrayElements = [1, 2, 3, 4, 5,];
+const arrayElements = [1, 2, 3, 4, 5];
 console.log(every(arrayElements, n => n < 5));
 
 

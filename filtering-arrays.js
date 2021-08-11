@@ -74,29 +74,29 @@ console.log(searchInArray(arrayElements, 'ea'));
  */
 
 //Modifying each words
+let words = ['spray', 'limit', 'exuberant', 'destruction', 'elite', 'present'];
 const modifiedWords = words.filter((word, index, arr) => {
     arr[index + 1] += ' extra'
     return word.length < 6
 })
-let words = ['spray', 'limit', 'exuberant', 'destruction', 'elite', 'present'];
 
 console.log(modifiedWords);
 
 
 // Appending new words
+words = ['spray', 'limit', 'exuberant', 'destruction', 'elite', 'present'];
 const appendedWords = words.filter((word, index, arr) => {
     arr.push('new')
     return word.length < 6
 })
 
-words = ['spray', 'limit', 'exuberant', 'destruction', 'elite', 'present'];
 console.log(appendedWords);
 
 // Deleting words
+words = ['spray', 'limit', 'exuberant', 'destruction', 'elite', 'present'];
 const deleteWords = words.filter((word, index, arr) => {
     arr.pop()
     return word.length < 6
 })
 
-words = ['spray', 'limit', 'exuberant', 'destruction', 'elite', 'present'];
 console.log(deleteWords);
